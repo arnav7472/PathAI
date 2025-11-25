@@ -1,7 +1,7 @@
-from app import app
-import routes.auth as auth_routes
-import routes.jobs as jobs_routes
-import routes.ai as ai_routes
+from .app import app
+from .routes import auth as auth_routes
+from .routes import jobs as jobs_routes
+from .routes import ai as ai_routes
 
 # Include routers
 app.include_router(auth_routes.router)

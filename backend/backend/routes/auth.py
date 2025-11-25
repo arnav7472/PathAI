@@ -26,11 +26,20 @@ def get_user_by_id(user_id: int):
     return None
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    user_id = verify_token(credentials.credentials)
-    user = get_user_by_id(user_id)
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user
+    try:
+        user_id = verify_token(credentials.credentials)
+        user = get_user_by_id(user_id)
+        if user is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        return user
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(
+            status_code=401,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"}
+        )
 
 @router.post("/register", response_model=dict)
 async def register(user_data: UserRegister):

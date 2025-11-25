@@ -347,11 +347,11 @@ async def create_sample_data():
             "message": f"Failed to create sample data: {str(e)}"
         }
 
-print("🚀 STEP 4: Authentication System READY!")
-print("📡 Endpoints:")
+print("STEP 4: Authentication System READY!")
+print("Endpoints:")
 print("   POST /register - User registration")
 print("   POST /login - User login") 
 print("   GET /me - Get current user (protected)")
 print("   POST /analyze-resume - AI Resume Analyzer (protected)")
 print("   POST /create-sample-data - Create test data")
-print("🔐 Add header: Authorization: Bearer <token>")
+print("Add header: Authorization: Bearer <token>")
