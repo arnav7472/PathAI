@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from models.users import UserRegister, UserLogin, Token, UserResponse
-from utils.password_hasher import get_password_hash, verify_password
-from utils.jwt_handler import create_access_token, verify_token
-from core.database import get_supabase
+from ..models.users import UserRegister, UserLogin, Token, UserResponse
+from ..utils.password_hasher import get_password_hash, verify_password
+from ..utils.jwt_handler import create_access_token, verify_token
+from ..core.database import get_supabase
 from datetime import timedelta
 
 router = APIRouter(prefix="/auth", tags=["authentication"])

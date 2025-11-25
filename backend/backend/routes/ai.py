@@ -1,7 +1,11 @@
 from fastapi import APIRouter, Depends
-from models.ai import ResumeAnalysisRequest, ResumeAnalysisResponse
-from utils.ai_helpers import extract_skills_from_text, analyze_resume_strengths, calculate_job_match_score
-from routes.auth import get_current_user
+from ..models.ai import ResumeAnalysisRequest, ResumeAnalysisResponse
+from ..utils.ai_helpers import (
+    extract_skills_from_text,
+    analyze_resume_strengths,
+    calculate_job_match_score,
+)
+from .auth import get_current_user
 
 router = APIRouter(prefix="/ai", tags=["ai"])
 

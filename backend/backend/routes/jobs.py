@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
-from models.jobs import JobResponse
-from routes.auth import get_current_user
+from ..models.jobs import JobResponse
+from .auth import get_current_user
 
 class JobCreate(BaseModel):
     title: str
