@@ -1,19 +1,20 @@
-from fastapi import FastAPI, HTTPException, Depends, status
-from pydantic import BaseModel
-from typing import List, Optional
+# This file is deprecated. Use /backend/main.py as the main entry point.
+# This file is kept for reference only.
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from passlib.context import CryptContext
-from jose import JWTError, jwt
-from datetime import datetime, timedelta
 
 app = FastAPI()
 
-# Add CORS middleware
+# Add CORS middleware - RESTRICTED to specific origins for security
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        # Add your production frontend URL here
+    ],
+    allow_credentials=False,  # Fixed: should be False when using specific origins
     allow_methods=["*"],
     allow_headers=["*"],
 )

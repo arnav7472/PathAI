@@ -9,11 +9,11 @@ def create_application() -> FastAPI:
         version="1.0.0"
     )
 
-    # Add CORS middleware
+    # Add CORS middleware - RESTRICTED to specific origins
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.CORS_ORIGINS,
-        allow_credentials=True,
+        allow_credentials=False,  # Fixed: Changed from True - security best practice
         allow_methods=["*"],
         allow_headers=["*"],
     )

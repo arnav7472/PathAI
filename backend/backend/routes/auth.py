@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from ..models.users import UserRegister, UserLogin, Token, UserResponse
 from ..utils.password_hasher import get_password_hash, verify_password
+from ..utils.validators import validate_password_strength
 from ..utils.jwt_handler import create_access_token, verify_token
 from ..core.database import get_supabase
 from datetime import timedelta
@@ -48,8 +49,37 @@ async def register(user_data: UserRegister):
     if get_user_by_email(user_data.email):
         raise HTTPException(status_code=400, detail="Email already registered")
     
-    if len(user_data.password) < 6:
-        raise HTTPException(status_code=400, detail="Password must be at least 6 characters")
+    # Validate password strength
+    is_valid, message = validate_password_strength(user_data.password)
+    if not is_valid:
+        raise HTTPException(status_code=400, detail=message)
+    
+    hashed_password = get_password_hash(user_data.password)
+    
+    new_user = {
+        "id": next_id,
+        "name": user_data.name,
+        "email": user_data.email,
+        "hashed_password": hashed_password,
+        "is_active": True
+    }
+    users_db.append(new_user)
+    next_id += 1
+    
+    access_token = create_access_token(data={"sub": new_user['id']})
+    
+    return {
+        "status": "success",
+        "message": "User registered successfully",
+        "access_token": access_token,
+        "token_type": "bearer",
+        "user_id": new_user['id'],
+        "user": {
+            "id": new_user['id'],
+            "name": new_user['name'],
+            "email": new_user['email']
+        }
+    }
     
     hashed_password = get_password_hash(user_data.password)
     

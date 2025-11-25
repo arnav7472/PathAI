@@ -31,18 +31,43 @@ const AICandidateMatcher = () => {
         })
       });
 
-      const data = await response.json();
-
+      // Handle network errors
       if (!response.ok) {
-        setError(data.detail || 'Failed to find candidates');
+        let errorMessage = 'Failed to find candidates';
+        try {
+          const data = await response.json();
+          errorMessage = data.detail || data.message || errorMessage;
+        } catch (parseError) {
+          // If response is not JSON, use default message
+          errorMessage = `Server error: ${response.status} ${response.statusText}`;
+        }
+        setError(errorMessage);
         setLoading(false);
         return;
       }
 
-      setRankedCandidates(data.candidates);
-      setJobSkills(data.job_skills);
+      // Safely parse JSON response
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        setError('Invalid response format from server');
+        setLoading(false);
+        return;
+      }
+
+      // Validate response data structure
+      if (!data || typeof data !== 'object') {
+        setError('Invalid response data from server');
+        setLoading(false);
+        return;
+      }
+
+      setRankedCandidates(data.candidates || []);
+      setJobSkills(data.job_skills || []);
     } catch (error) {
-      setError(error.message || 'An error occurred while finding candidates');
+      const errorMessage = error?.message || 'An error occurred while finding candidates';
+      setError(`Error: ${errorMessage}`);
     } finally {
       setLoading(false);
     }

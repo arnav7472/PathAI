@@ -1,8 +1,9 @@
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
-from routes.auth import get_current_user
+from .auth import get_current_user
 from difflib import SequenceMatcher
+from ..utils.ai_helpers import extract_skills_from_text
 
 router = APIRouter(prefix="/candidates", tags=["candidates"])
 
@@ -48,25 +49,6 @@ class CandidateResponse(BaseModel):
     text_similarity: float
     matching_skills: List[str]
     missing_skills: List[str]
-
-def extract_skills_from_text(text: str) -> List[str]:
-    """Extract potential skills from text"""
-    tech_skills = [
-        "python", "javascript", "java", "c++", "c#", "go", "rust", "php", "ruby",
-        "react", "angular", "vue", "django", "flask", "fastapi", "node", "express",
-        "mysql", "postgresql", "mongodb", "redis", "sql", "nosql",
-        "aws", "azure", "gcp", "docker", "kubernetes", "terraform",
-        "git", "jenkins", "ci/cd", "rest", "graphql", "api", "microservices", "ux"
-    ]
-    
-    text_lower = text.lower()
-    found_skills = []
-    
-    for skill in tech_skills:
-        if skill in text_lower:
-            found_skills.append(skill.title())
-    
-    return list(set(found_skills))
 
 def calculate_text_similarity(text1: str, text2: str) -> float:
     """Calculate similarity between two texts"""

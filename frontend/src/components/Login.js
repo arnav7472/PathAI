@@ -16,6 +16,25 @@ const Login = () => {
   const handleAuth = async () => {
     setError('');
     setSuccess('');
+    
+    // Validate inputs
+    if (!email || !password) {
+      setError('Email and password are required');
+      return;
+    }
+
+    if (!isLogin && !name) {
+      setError('Name is required for registration');
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -32,10 +51,25 @@ const Login = () => {
         body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+      // Handle response parsing safely
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        setError(`Server error: ${response.status} ${response.statusText}`);
+        setLoading(false);
+        return;
+      }
 
       if (!response.ok) {
-        setError(data.detail || data.message || 'Authentication failed');
+        setError(data?.detail || data?.message || 'Authentication failed');
+        setLoading(false);
+        return;
+      }
+
+      // Validate response data
+      if (!data?.access_token || !data?.user) {
+        setError('Invalid response from server');
         setLoading(false);
         return;
       }
@@ -43,15 +77,15 @@ const Login = () => {
       // Store token and user info
       localStorage.setItem('accessToken', data.access_token);
       localStorage.setItem('userId', data.user_id);
-      localStorage.setItem('userName', data.user.name);
-      localStorage.setItem('userEmail', data.user.email);
+      localStorage.setItem('userName', data.user?.name || '');
+      localStorage.setItem('userEmail', data.user?.email || '');
 
       setSuccess(isLogin ? 'Logged in successfully!' : 'Signed up successfully!');
       setTimeout(() => {
         navigate('/jobs');
       }, 1500);
     } catch (error) {
-      setError(error.message || 'An error occurred. Please check your backend connection.');
+      setError(`Error: ${error?.message || 'An error occurred. Please check your backend connection.'}`);
     } finally {
       setLoading(false);
     }
