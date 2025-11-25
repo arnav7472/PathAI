@@ -4,6 +4,8 @@ import Login from './components/Login';
 import JobList from './components/JobList';
 import JobPost from './components/JobPost';
 import ResumeBuilder from './components/ResumeBuilder';
+import AICandidateMatcher from './components/AICandidateMatcher';
+import CandidateProfile from './components/CandidateProfile';
 
 function App() {
   return (
@@ -14,6 +16,8 @@ function App() {
         <Route path="/jobs" element={<JobList />} />
         <Route path="/post-job" element={<JobPost />} />
         <Route path="/resume-builder" element={<ResumeBuilder />} />
+        <Route path="/candidate-matcher" element={<AICandidateMatcher />} />
+        <Route path="/candidate-profile" element={<CandidateProfile />} />
       </Routes>
     </Router>
   );

@@ -1,0 +1,146 @@
+.candidate-profile {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.candidate-profile .container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.profile-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  margin-bottom: 40px;
+}
+
+.profile-card h1 {
+  color: #333;
+  margin: 0 0 5px 0;
+  font-size: 2.5em;
+}
+
+.profile-card .email {
+  color: #666;
+  margin: 0 0 30px 0;
+  font-size: 1.1em;
+}
+
+.match-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+  padding: 20px 0;
+  border-top: 2px solid #f0f0f0;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.match-item {
+  text-align: center;
+}
+
+.match-item h3 {
+  color: #555;
+  margin: 0 0 10px 0;
+  font-size: 0.9em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.score-display {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: #667eea;
+  margin: 10px 0;
+}
+
+.match-item .MuiLinearProgress-root {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.section {
+  margin: 30px 0;
+}
+
+.section h2 {
+  color: #333;
+  margin: 0 0 15px 0;
+  font-size: 1.4em;
+  border-bottom: 2px solid #667eea;
+  padding-bottom: 10px;
+}
+
+.resume-content {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  color: #555;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: 'Courier New', monospace;
+  font-size: 0.95em;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.chip-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0;
+}
+
+.skill-chip {
+  font-weight: 500;
+  padding: 8px 12px;
+}
+
+.skill-chip.matching {
+  background-color: #e8f5e9 !important;
+  border-color: #4caf50 !important;
+  color: #2e7d32 !important;
+}
+
+.skill-chip.missing {
+  background-color: #ffebee !important;
+  border-color: #f44336 !important;
+  color: #c62828 !important;
+}
+
+.action-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.action-buttons button {
+  padding: 12px 20px !important;
+  font-size: 1em !important;
+  border-radius: 8px !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-card h1 {
+    font-size: 1.8em;
+  }
+
+  .match-info {
+    grid-template-columns: 1fr;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-content {
+    font-size: 0.85em;
+  }
+}
