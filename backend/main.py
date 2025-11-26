@@ -1,8 +1,8 @@
-from backend.app import app
-from backend.routes import auth as auth_routes
-from backend.routes import jobs as jobs_routes
-from backend.routes import ai as ai_routes
-from backend.routes import candidates as candidates_routes
+from backend.backend.app import app
+from backend.backend.routes import auth as auth_routes
+from backend.backend.routes import jobs as jobs_routes
+from backend.backend.routes import ai as ai_routes
+from backend.backend.routes import candidates as candidates_routes
 
 # Include routers
 app.include_router(auth_routes.router)

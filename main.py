@@ -2,11 +2,13 @@ from backend.backend.app import app
 from backend.backend.routes import auth as auth_routes
 from backend.backend.routes import jobs as jobs_routes
 from backend.backend.routes import ai as ai_routes
+from backend.backend.routes import candidates as candidates_routes
 
 # Include routers
 app.include_router(auth_routes.router)
 app.include_router(jobs_routes.router)
 app.include_router(ai_routes.router)
+app.include_router(candidates_routes.router)
 
 @app.get("/")
 async def root():
